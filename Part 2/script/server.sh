@@ -10,7 +10,7 @@ until [ -f /var/lib/rancher/k3s/server/node-token ]; do
 	sleep 1
 done
 cp /var/lib/rancher/k3s/server/node-token /mnt/shared/node-token
-kubectl apply -f "$HOME/my_confs/configmap.yaml"
-kubectl apply -f "$HOME/my_confs/deployments.yaml"
-kubectl apply -f "$HOME/my_confs/services.yaml"
-kubectl apply -f "$HOME/my_confs/ingress.yaml"
+kubectl apply -f "/root/my_confs/configmap.yaml"
+kubectl apply -f "/root/my_confs/deployments.yaml"
+kubectl apply -f "/root/my_confs/services.yaml"
+kubectl apply -f "/root/my_confs/ingress.yaml"
