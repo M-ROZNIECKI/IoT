@@ -1,0 +1,36 @@
+
+# -- app-one -- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-one
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: nginx
+---
+# -- app-two -- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-two
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: nginx
+---
+# -- app-three -- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-three
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: nginx
