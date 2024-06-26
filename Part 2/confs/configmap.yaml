@@ -48,3 +48,43 @@ data:
             </div>
         </body>
     </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-template
+data:
+  default.conf.template: |
+    server {
+        listen       ${NGINX_PORT};
+        server_name  ${NGINX_HOST};
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+            add_header X-Pod-Name ${POD_NAME};
+            add_header X-Pod-Namespace ${POD_NAMESPACE};
+            add_header X-Node-Name ${NODE_NAME};
+            add_header X-Service-Account-Name ${SERVICE_ACCOUNT_NAME};
+            add_header X-Host-IP ${HOST_IP};
+            add_header X-Pod-IP ${POD_IP};
+            add_header X-CPU-Limit ${CPU_LIMIT};
+            add_header X-Memory-Limit ${MEMORY_LIMIT};
+            add_header X-Ephemeral-Storage-Limit ${EPHEMERAL_STORAGE_LIMIT};
+            add_header X-CPU-Request ${CPU_REQUEST};
+            add_header X-Memory-Request ${MEMORY_REQUEST};
+            add_header X-Ephemeral-Storage-Request ${EPHEMERAL_STORAGE_REQUEST};
+        }
+        location /get-pod {
+            default_type text/plain;
+            return 200 "${POD_NAME}";
+        }
+        location /pod-info {
+            default_type text/plain;
+            return 200 "Pod Name: ${POD_NAME}\nPod Namespace: ${POD_NAMESPACE}\nNode Name: ${NODE_NAME}\nService Account Name: ${SERVICE_ACCOUNT_NAME}\nHost IP: ${HOST_IP}\nPod IP: ${POD_IP}\n";
+        }
+        location /resource-info {
+            default_type text/plain;
+            return 200 "CPU Limit: ${CPU_LIMIT}\nMemory Limit: ${MEMORY_LIMIT}\nEphemeral Storage Limit: ${EPHEMERAL_STORAGE_LIMIT}\nCPU Request: ${CPU_REQUEST}\nMemory Request: ${MEMORY_REQUEST}\nEphemeral Storage Request: ${EPHEMERAL_STORAGE_REQUEST}\n";
+        }
+    }
