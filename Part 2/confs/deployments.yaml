@@ -17,7 +17,7 @@ spec:
       containers:
       - name: app-one
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
@@ -113,7 +113,7 @@ spec:
       containers:
       - name: app-two
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
@@ -209,7 +209,7 @@ spec:
       containers:
       - name: app-three
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
