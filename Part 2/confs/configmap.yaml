@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-one
+data:
+  index.html:
+    <html>
+        <head>
+            <title>My App1</title>
+        </head>
+        <body>
+            <div>
+                <h1>This is App-one</h1>
+            </div>
+        </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-two
+data:
+  index.html:
+    <html>
+        <head>
+            <title>My App2</title>
+        </head>
+        <body>
+            <div>
+                <h1>This is App-two</h1>
+            </div>
+        </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-three
+data:
+  index.html:
+    <html>
+        <head>
+            <title>My App3</title>
+        </head>
+        <body>
+            <div>
+                <h1>This is App-three</h1>
+            </div>
+        </body>
+    </html>
