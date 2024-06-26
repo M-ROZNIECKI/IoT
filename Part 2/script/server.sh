@@ -9,8 +9,8 @@ echo "Wait for k3s..."
 until [ -f /var/lib/rancher/k3s/server/node-token ]; do
 	sleep 1
 done
-cp /var/lib/rancher/k3s/server/node-token /mnt/shared/node-token
-kubectl apply -f "/root/my_confs/configmap.yaml"
-kubectl apply -f "/root/my_confs/deployments.yaml"
-kubectl apply -f "/root/my_confs/services.yaml"
-kubectl apply -f "/root/my_confs/ingress.yaml"
+echo "Wait for k3s done"
+kubectl apply -f "/var/IoTconfs/configmap.yaml"
+kubectl apply -f "/var/IoTconfs/deployments.yaml"
+kubectl apply -f "/var/IoTconfs/services.yaml"
+kubectl apply -f "/var/IoTconfs/ingress.yaml"
