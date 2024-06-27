@@ -10,6 +10,7 @@ until [ -f /var/lib/rancher/k3s/server/node-token ]; do
 	sleep 1
 done
 echo "Wait for k3s done"
+mv /tmp/IoTconfs /var/IoTconfs
 kubectl apply -f "/var/IoTconfs/configmap.yaml"
 kubectl apply -f "/var/IoTconfs/deployments.yaml"
 kubectl apply -f "/var/IoTconfs/services.yaml"
