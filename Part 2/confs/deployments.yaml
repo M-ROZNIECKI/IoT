@@ -17,19 +17,81 @@ spec:
       containers:
       - name: app-one
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
         ports:
         - containerPort: 80
+        env:
+          - name: NGINX_HOST
+            value: app1
+          - name: NGINX_PORT
+            value: '80'
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_UID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: SERVICE_ACCOUNT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.serviceAccountName
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: CPU_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.cpu
+          - name: MEMORY_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+          - name: EPHEMERAL_STORAGE_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.ephemeral-storage
+          - name: CPU_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.cpu
+          - name: MEMORY_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.memory
+          - name: EPHEMERAL_STORAGE_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.ephemeral-storage
         volumeMounts:
         - name: html
           mountPath: /usr/share/nginx/html
+        - name: conf-template
+          mountPath: /etc/nginx/templates
       volumes:
       - name: html
         configMap:
           name: app-one
+      - name: conf-template
+        configMap:
+          name: nginx-template
 ---
 # -- app-two -- #
 apiVersion: apps/v1
@@ -51,12 +113,81 @@ spec:
       containers:
       - name: app-two
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
         ports:
         - containerPort: 80
+        env:
+          - name: NGINX_HOST
+            value: app2
+          - name: NGINX_PORT
+            value: '80'
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_UID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: SERVICE_ACCOUNT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.serviceAccountName
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: CPU_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.cpu
+          - name: MEMORY_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+          - name: EPHEMERAL_STORAGE_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.ephemeral-storage
+          - name: CPU_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.cpu
+          - name: MEMORY_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.memory
+          - name: EPHEMERAL_STORAGE_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.ephemeral-storage
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+        - name: conf-template
+          mountPath: /etc/nginx/templates
+      volumes:
+      - name: html
+        configMap:
+          name: app-two
+      - name: conf-template
+        configMap:
+          name: nginx-template
 ---
 # -- app-three -- #
 apiVersion: apps/v1
@@ -66,7 +197,6 @@ metadata:
   labels:
     app: app
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: app-three
@@ -78,9 +208,78 @@ spec:
       containers:
       - name: app-three
         image: nginx:latest
-        ressources:
+        resources:
           limits:
             memory: "500Mi"
             cpu: "400m"
         ports:
         - containerPort: 80
+        env:
+          - name: NGINX_HOST
+            value: app3
+          - name: NGINX_PORT
+            value: '80'
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_UID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: SERVICE_ACCOUNT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.serviceAccountName
+          - name: HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: CPU_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.cpu
+          - name: MEMORY_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
+          - name: EPHEMERAL_STORAGE_LIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.ephemeral-storage
+          - name: CPU_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.cpu
+          - name: MEMORY_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.memory
+          - name: EPHEMERAL_STORAGE_REQUEST
+            valueFrom:
+              resourceFieldRef:
+                resource: requests.ephemeral-storage
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+        - name: conf-template
+          mountPath: /etc/nginx/templates
+      volumes:
+      - name: html
+        configMap:
+          name: app-three
+      - name: conf-template
+        configMap:
+          name: nginx-template
