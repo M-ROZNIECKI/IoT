@@ -11,7 +11,16 @@ until [ -f /var/lib/rancher/k3s/server/node-token ]; do
 done
 echo "Wait for k3s done"
 mv /tmp/IoTconfs /var/IoTconfs
-kubectl apply -f "/var/IoTconfs/configmap.yaml"
-kubectl apply -f "/var/IoTconfs/deployments.yaml"
-kubectl apply -f "/var/IoTconfs/services.yaml"
-kubectl apply -f "/var/IoTconfs/ingress.yaml"
+sleep 5
+echo "kubectl alias setup"
+alias k=kubectl
+echo "alias k=kubectl" >> $HOME/.profile
+echo "alias k=kubectl" >> /home/vagrant/.profile
+sleep 5
+k apply -f "/var/IoTconfs/configmap.yaml"
+sleep 5
+k apply -f "/var/IoTconfs/deployments.yaml"
+sleep 5
+k apply -f "/var/IoTconfs/services.yaml"
+sleep 5
+k apply -f "/var/IoTconfs/ingress.yaml"
